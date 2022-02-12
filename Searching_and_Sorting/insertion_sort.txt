@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+std::vector<int> insertion_sort(vector<int> vec)
+{
+    int n = vec.size();
+
+    for(int i = 1; i < n; i++)
+    {
+        int j = i;
+
+        while( j >= 1 && vec[j] < vec[j - 1])
+        {
+            int temp = vec[j];
+            vec[j] = vec[j - 1];
+            vec[j - 1] =  temp;
+            j--;
+        }
+    }
+    return vec;
+}
+
+int main() {
+    vector<int> vec;
+
+    for(int i = 0; i < 100000; i++)
+        vec.push_back(i);
+    int j = 0;
+    for(int i = 10000; i > 0; i--)
+    {
+        j++;
+        vec[++j] = i;
+    }
+
+    vector<int> vec1 = insertion_sort(vec);
+    cout<<"isSorted : "<< is_sorted(vec1.begin(), vec1.end());
+    return 0;
+}
+

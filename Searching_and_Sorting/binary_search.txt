@@ -7,7 +7,7 @@ bool binary_search(vector<int> vec, int ele)
     int low = 0;
     int high = n - 1;
     
-    while(low < high)
+    while(low <= high)
     {
         int mid = (low + high)/2;
         

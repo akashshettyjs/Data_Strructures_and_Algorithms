@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void printVec(vector<int> vec)
+{
+    cout<<"\n\n | ";
+    for(int i = 0; i < vec.size(); i++)
+    {
+        cout<<vec[i]<<" | ";
+    }
+}
+
+void swap_t(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void heapify(vector<int> &vec, int n, int max_idx)
+{
+    int flag = max_idx;
+
+    int left_idx = 2 * max_idx + 1;
+    int right_idx = 2 * max_idx + 2;
+
+    if(left_idx < n && vec[left_idx] > vec[max_idx])
+        max_idx = left_idx;
+
+    if(right_idx < n && vec[right_idx] > vec[max_idx])
+        max_idx = right_idx;
+
+    if(max_idx != flag)
+    {
+        swap_t(vec[max_idx],  vec[flag]);
+        heapify(vec, n, max_idx);
+    }
+}
+
+void  heap_sort(vector<int> &vec)
+{
+    int n = vec.size();
+
+    for(int i = n/2 - 1; i >= 0; i--)
+        heapify(vec, n, i);
+
+    for(int i = n-1; i >= 0; i--)
+    {
+        swap_t(vec[0], vec[i]);
+        heapify(vec, i, 0);
+    }
+}
+
+int main() {
+    vector<int> vec;
+    for(int i = 40000; i > 0; i--)
+    {
+        vec.push_back(i);
+    }
+    printVec(vec);
+    clock_t beg1 = clock();
+
+    heap_sort(vec);
+
+    clock_t end1 = clock();
+    printVec(vec);
+
+    cout<<"\nTime taken by heap_sort :"<<(end1 - beg1)/CLOCKS_PER_SEC;
+    cout<<"\nisSorted : "<<is_sorted(vec.begin(), vec.end());
+    return 0;
+}
+

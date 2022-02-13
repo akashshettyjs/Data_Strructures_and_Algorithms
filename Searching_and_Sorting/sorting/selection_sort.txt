@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void printVec(vector<int> vec)
+{
+    cout<<"\n\n | ";
+    for(int i = 0; i < vec.size(); i++)
+    {
+        cout<<vec[i]<<" | ";
+    }
+}
+
+void swap_t(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void selectionSort(vector<int> &arr)
+{
+    int i, j, min_idx;
+    int n = arr.size();
+
+    for (i = 0; i < n-1; i++)
+    {
+        min_idx = i;
+        for (j = i+1; j < n; j++)
+        if (arr[j] < arr[min_idx])
+            min_idx = j;
+
+        swap_t(arr[min_idx], arr[i]);
+    }
+}
+
+int main() {
+    vector<int> vec;
+    for(int i = 40000; i > 0; i--)
+    {
+        vec.push_back(i);
+    }
+    printVec(vec);
+    clock_t beg1 = clock();
+
+    selectionSort(vec);
+
+    clock_t end1 = clock();
+    printVec(vec);
+
+    cout<<"\nTime taken by binary_search :"<<(end1 - beg1)/CLOCKS_PER_SEC;
+    cout<<"\nisSorted : "<<is_sorted(vec.begin(), vec.end());
+    return 0;
+}
+

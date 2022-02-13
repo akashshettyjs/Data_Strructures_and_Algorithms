@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void printVec(vector<int> vec)
+{
+    cout<<"\n\n | ";
+    for(int i = 0; i < vec.size(); i++)
+    {
+        cout<<vec[i]<<" | ";
+    }
+}
+
+void swap_t(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int partition(vector<int> &vec, int low , int high)
+{
+    int pi = vec[high];
+    int j = low;
+
+    for(int i = low; i < high; i++)
+        if(vec[i] <  pi)
+        {
+            swap_t(vec[i], vec[j]);
+            j++;
+        }
+    swap_t(vec[high], vec[j]);
+    return j;
+}
+
+vector<int> quickSort(vector<int> &vec, int low, int high)
+{
+    if(low < high)
+    {
+        int j = partition(vec, low, high);
+        cout<<"\nJ ; "<<j;
+
+        quickSort(vec, low, j - 1);
+        quickSort(vec, j + 1, high);
+    }
+
+    return vec;
+}
+
+int main() {
+    vector<int> vec;
+    for(int i = 30000; i > 0; i--)
+    {
+        vec.push_back(i);
+    }
+    clock_t beg1 = clock();
+    vector<int> vec1 = quickSort(vec, 0, vec.size() - 1);
+
+    clock_t end1 = clock();
+    cout<<"\nTime taken by binary_search :"<<(end1 - beg1)/CLOCKS_PER_SEC;
+    cout<<"\nisSorted : "<<is_sorted(vec1.begin(), vec1.end());
+    return 0;
+}
+

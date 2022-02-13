@@ -1,0 +1,86 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void printVec(vector<int> vec)
+{
+    cout<<"\n\n | ";
+    for(int i = 0; i < vec.size(); i++)
+    {
+        cout<<vec[i]<<" | ";
+    }
+}
+
+void swap_t(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void Merge(vector<int> &vec, int beg1, int end1, int beg2, int end2)
+{
+    vector<int> vec1;
+    vector<int> vec2;
+
+    for(int l = beg1; l <= end1; l++)
+        vec1.push_back(vec[l]);
+
+    for(int l = beg2; l <= end2; l++)
+        vec2.push_back(vec[l]);
+
+    int i = 0; int j = 0;
+    int k = beg1;
+
+    while(i < vec1.size() && j < vec2.size())
+    {
+        if(vec1[i] < vec2[j])
+        {
+            vec[k] = vec1[i];
+            i++;
+        }
+        else
+        {
+            vec[k] = vec2[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < vec1.size()) {
+        vec[k++] = vec1[i++];
+    }
+
+    while (j < vec2.size()) {
+        vec[k++] = vec2[j++];
+    }
+}
+
+void MergeSort(vector<int> &vec, int beg, int end)
+{
+    if(beg <  end)
+    {
+        MergeSort(vec, beg, (beg+end)/2);
+        MergeSort(vec, ((beg+end)/2) + 1, end);
+        Merge(vec, beg, (beg+end)/2, ((beg+end)/2)+1, end);
+    }
+}
+
+int main() {
+    vector<int> vec;
+    for(int i = 40000; i > 0; i--)
+    {
+        vec.push_back(i);
+    }
+    printVec(vec);
+    clock_t beg1 = clock();
+
+    MergeSort(vec, 0, vec.size() - 1);
+
+    clock_t end1 = clock();
+    printVec(vec);
+
+    cout<<"\nTime taken by binary_search :"<<(end1 - beg1)/CLOCKS_PER_SEC;
+    cout<<"\nisSorted : "<<is_sorted(vec.begin(), vec.end());
+    return 0;
+}
+
